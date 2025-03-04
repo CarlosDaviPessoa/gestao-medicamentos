@@ -1,4 +1,13 @@
-```javascript
+async function carregarPostos() {
+    const response = await fetch('/api/postos');
+    const postos = await response.json();
+
+    const selectPosto = document.getElementById('posto');
+    selectPosto.innerHTML = postos.map(posto => `
+        <option value="${posto.id}">${posto.nome}</option>
+    `).join('');
+}
+
 async function carregarMedicamentos() {
     const postoId = document.getElementById('posto').value;
     const response = await fetch(`/api/medicamentos/${postoId}`);
@@ -24,44 +33,8 @@ async function atualizarDisponibilidade(id, disponivel) {
     carregarMedicamentos(); // Recarrega a lista após a atualização
 }
 
-// Carrega os medicamentos ao carregar a página
+// Carrega os postos e medicamentos ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
+    carregarPostos();
     carregarMedicamentos();
 });
-```
-
-5. **Abra o arquivo `public/styles.css` no VSCode.**
-6. **Adicione o código CSS:**
-- Adicione o seguinte código:
-```css
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-}
-
-h1 {
-    color: #333;
-}
-
-#app {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background: #f9f9f9;
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-button {
-    margin-left: 10px;
-}
-```
